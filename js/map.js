@@ -119,34 +119,34 @@ let typesMap = {
 
 // **
 
-var getRandomFromInterval = function(min, max) {
+let getRandomFromInterval = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var randomMixArray = function(array) {
-    var copyArr = array.slice(0);
+let randomMixArray = function(array) {
+	let copyArr = array.slice(0);
 
-    for (var i = copyArr.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = copyArr[i];
-        copyArr[i] = copyArr[j];
-        copyArr[j] = temp;
+    for (let i = copyArr.length - 1; i > 0; i--) {
+		let j = Math.floor(Math.random() * (i + 1));
+		let temp = copyArr[i];
+		copyArr[i] = copyArr[j];
+		copyArr[j] = temp;
     }
 
     return copyArr;
 };
 
-var randomCutArray = function(array) {
-    var copyArr = array.slice(0);
-    var length = getRandomFromInterval(0, copyArr.length);
+let randomCutArray = function(array) {
+    let copyArr = array.slice(0);
+    let length = getRandomFromInterval(0, copyArr.length);
     copyArr.slice(0, length);
     return copyArr;
 };
 
 // **
 
-var createRelatedAds = function(i) {
-    var relatedAds = {
+let createRelatedAds = function(i) {
+    let relatedAds = {
         author: {
             avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
         },
@@ -195,7 +195,7 @@ var createRelatedAds = function(i) {
 
 // **
 
-for (var i = 0; i < TOTAL_ADS; i++) {
+for (let i = 0; i < TOTAL_ADS; i++) {
     announcements[i] = createRelatedAds(i);
 }
 
@@ -215,7 +215,7 @@ MAP.classList.remove('map--faded');
  *      src=" {{author.avatar}} "
  *      alt=" {{заголовок объявления}} "
  */
-var createPinMarkup = function(pinData) {
+let createPinMarkup = function(pinData) {
 	/**
 	 * NOTE:
 	 * Вызов elem.cloneNode(true) создаст «глубокую» копию элемента – вместе с
@@ -269,7 +269,7 @@ let createFeatureFragment = function(adsData) {
 	for (let i = 0; i < adsData.offer.features.length; i++) {
 		let featureItem = document.createElement('li');
 
-		featureItem.className = 
+		featureItem.className =
 			'popup__feature popup__feature--' + adsData.offer.features[i];
 
 		featureFragment.appendChild(featureItem);
@@ -283,6 +283,7 @@ let createPhotosFragment = function(adsData) {
 
 	for (let i = 0; i < adsData.offer.photos.length; i++) {
 		let popupPhotoItem = popupPhoto.cloneNode(true);
+
 		popupPhotoItem.src = adsData.offer.photos[i];
 		photosFragment.appendChild(popupPhotoItem);
 	}
@@ -299,9 +300,9 @@ let createPhotosFragment = function(adsData) {
  */
 let createAds = function(adsData) {
 	let ads = adTemplate.cloneNode(true);
+
 	ads.querySelector('.map__card img').src = adsData.author.avatar;
 	ads.querySelector('.popup__title').textContent = adsData.offer.title;
-
 	ads.querySelector('.popup__text--price').textContent =
 		adsData.offer.price + ' ₽/ночь';
 
@@ -316,11 +317,21 @@ let createAds = function(adsData) {
 		', выезд до ' + adsData.offer.checkout;
 
 	ads.querySelector('.popup__features').innerHTML = '';
-	ads.querySelector('.popup__features').appendChild(createFeatureFragment(adsData));
-	ads.querySelector('.popup__description').textContent = adsData.offer.description;
-	ads.querySelector('.popup__photos').removeChild(ads.querySelector('.popup__photo'));
-	ads.querySelector('.popup__photos').appendChild(createPhotosFragment(adsData));
+
+	ads.querySelector('.popup__features').appendChild(
+		createFeatureFragment(adsData));
+
+	ads.querySelector('.popup__description').textContent =
+		adsData.offer.description;
+
+	ads.querySelector('.popup__photos').removeChild(
+		ads.querySelector('.popup__photo'));
+
+	ads.querySelector('.popup__photos').appendChild(
+		createPhotosFragment(adsData));
+
 	return ads;
 };
 
-mapFiltersContainer.insertAdjacentElement('beforebegin', createAds(announcements[0]));
+mapFiltersContainer.insertAdjacentElement(
+	'beforebegin', createAds(announcements[0]));
