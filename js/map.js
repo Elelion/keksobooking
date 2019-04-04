@@ -1,17 +1,5 @@
 /*jshint esversion: 6 */
 
-/**
- * NOTE:
- * Это файл, в котором вы будете вести работу с похожими объявлениями на карте
- */
-
-/**
- * TODO:
- * 1.
- * Создайте массив, состоящий из 8 сгенерированных JS объектов, которые
- * будут описывать похожие объявления неподалёку.
- */
-
 const TOTAL_ADS = 8;
 
 let OffersCollection = {
@@ -95,18 +83,14 @@ const PIN_SIZE = {
 
 // **
 
-// TODO: 5, см. ниже
 let announcements = [];
 let template = document.querySelector('template');
 
-// TODO: 2, см.ниже
 const MAP = document.querySelector('.map');
 
-// TODO: 3, см.ниже
 let mapPins = document.querySelector('.map__pins');
 let mapPinTemplate = template.content.querySelector('.map__pin');
 
-// TODO: 5, см. ниже
 let adTemplate = template.content.querySelector('.map__card');
 let popupPhoto = template.content.querySelector('.popup__photo');
 let mapFiltersContainer = document.querySelector('.map__filters-container');
@@ -205,23 +189,7 @@ MAP.classList.remove('map--faded');
 
 // **
 
-/**
- * TODO: 3
- * На основе данных, созданных в первом пункте, создайте DOM-элементы,
- * соответствующие меткам на карте, и заполните их данными из массива.
- * Итоговую разметку метки .map__pin можно взять из шаблона .map__card .
- *      У метки должны быть следующие данные:
- *      Координаты: style="left: {{location.x}} px; top: {{location.y}} px;"
- *      src=" {{author.avatar}} "
- *      alt=" {{заголовок объявления}} "
- */
 let createPinMarkup = function(pinData) {
-	/**
-	 * NOTE:
-	 * Вызов elem.cloneNode(true) создаст «глубокую» копию элемента – вместе с
-	 * атрибутами, включая подэлементы. Если же вызвать с аргументом false,
-	 * то копия будет сделана без дочерних элементов. Это нужно гораздо реже.
-	 */
 	let cloneMapPinTemplate = mapPinTemplate.cloneNode(true);
 
 	cloneMapPinTemplate.querySelector('img').src = pinData.author.avatar;
@@ -231,11 +199,6 @@ let createPinMarkup = function(pinData) {
 	return cloneMapPinTemplate;
 };
 
-/**
- * TODO: 4
- * Отрисуйте сгенерированные DOM-элементы в блок .map__pins . Для вставки
- * элементов используйте DocumentFragment
- */
 let renderPinsMarkup = function(pinsData) {
 	let mapPinsFragment = document.createDocumentFragment();
 
@@ -251,19 +214,6 @@ renderPinsMarkup(announcements);
 // **
 
 let createFeatureFragment = function(adsData) {
-	/**
-	 * NOTE:
-	 * DocumentFragment - легкий контейнер, который может содержать узлы DOM
-	 *
-	 * У DocumentFragment нет обычных свойств DOM-узлов, таких как innerHTML,
-	 * tagName и т.п. Это не узел. Его «Фишка» заключается в том, что когда
-	 * DocumentFragment вставляется в DOM – то он исчезает, а вместо него
-	 * вставляются его дети. Это свойство является уникальной особенностью
-	 * DocumentFragment. Например, если добавить в него много LI, и потом
-	 * вызвать ul.appendChild(fragment), то фрагмент растворится, и в DOM
-	 * вставятся именно LI, причём в том же порядке, в котором
-	 * были во фрагменте.
-	 */
 	let featureFragment = document.createDocumentFragment();
 
 	for (let i = 0; i < adsData.offer.features.length; i++) {
@@ -291,13 +241,6 @@ let createPhotosFragment = function(adsData) {
 	return photosFragment;
 };
 
-/**
- * TODO: 5
- * На основе первого по порядку элемента из сгенерированного массива
- * и шаблона .map__card создайте DOM-элемент объявления, заполните его
- * данными из объекта и вставьте полученный DOM-элемент
- * в блок .map перед блоком .map__filters-container :
- */
 let createAds = function(adsData) {
 	let ads = adTemplate.cloneNode(true);
 
